@@ -1,12 +1,21 @@
 import { useState } from 'react'
 import useToday from '../hooks/useToday'
 import PieChartExpenses from '../components/Charts/PieChartExpenses/PieChartExpenses'
+import ExpensesForm from '../components/Transactions/ExpensesForm/ExpensesForm'
 
 const Transactions = () => {
   const today = useToday()
 
   // Estado para manejar qué vista mostrar
   const [view, setView] = useState('All') // Empezamos con la vista 'All'
+  const [isFormOpen, setIsFormOpen] = useState(false) // Estado para controlar si el formulario está abierto o cerrado
+
+  const handleOpenForm = () => {
+    setIsFormOpen(true);
+  };
+  const handleCloseForm = () => {
+    setIsFormOpen(false);
+  };
 
   return (
     <>
@@ -22,7 +31,14 @@ const Transactions = () => {
 
       {view === 'All'}
       {view === 'Income'}
-      {view === 'Expenses' && <PieChartExpenses />}
+      {view === 'Expenses' && (
+        <>
+          <PieChartExpenses />
+          <button onClick={handleOpenForm}>Add Expense</button>
+          {/* Mostrar el formulario si isFormOpen es true */}
+          {isFormOpen && <ExpensesForm onClose={handleCloseForm} />}
+        </>
+      )}
     </>
   )
 }
