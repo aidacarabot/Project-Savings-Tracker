@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
-import useFinanceStats from '../../hooks/useFinanceStats';
+import useFinanceStats from '../../../hooks/useFinanceStats'
+
+
 
 
 const LineChartExpensesSavings = () => {
