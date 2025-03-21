@@ -2,6 +2,7 @@ import { useState } from 'react'
 import useToday from '../hooks/useToday'
 import PieChartExpenses from '../components/Charts/PieChartExpenses/PieChartExpenses'
 import ExpensesForm from '../components/Transactions/ExpensesForm/ExpensesForm'
+import IncomeForm from '../components/Transactions/IncomeForm/IncomeForm'
 
 const Transactions = () => {
   const today = useToday()
@@ -30,7 +31,13 @@ const Transactions = () => {
       <h2>{`You are in the ${view} view`}</h2>
 
       {view === 'All'}
-      {view === 'Income'}
+      {view === 'Income' && (
+        <>
+          <button onClick={handleOpenForm}>Add Income</button>
+          {/* Mostrar el formulario si isFormOpen es true */}
+          {isFormOpen && <IncomeForm onClose={handleCloseForm} />}
+        </>
+      )}
       {view === 'Expenses' && (
         <>
           <PieChartExpenses />
