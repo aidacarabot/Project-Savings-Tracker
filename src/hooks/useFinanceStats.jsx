@@ -1,23 +1,20 @@
-//! Un hook personalizado para calcular y devolver las estadísticas de finanzas como balance, ingresos, gastos, y ahorros.
+//! Un hook personalizado para calcular y devolver las estadísticas de finanzas como balance, ingresos, gastos, y ahorros. Usa FinanceContext para acceder al estado financiero y realizar cálculos o transformaciones sobre ellos. Es el paso final que permite a los componentes usar fácilmente las estadísticas financieras.
 
 import { useContext, useMemo } from 'react'
 import FinanceContext from '../context/FinanceContext'
 
 const useFinanceStats = () => {
-  const { state } = useContext(FinanceContext); // Obtenemos el estado financiero desde el contexto
-  const { income, expenses, savings } = state; // Extraemos los ingresos, gastos y ahorros
+  const { state } = useContext(FinanceContext); // Obtenemos el estado del contexto. Proporciona datos financieros (income, expenses, savings).
+  const { income, expenses, savings } = state; // Extraemos estos del state para poder usarlos en los cálculos
 
-  // Asegúrate de que savings sea un arreglo
-  const savingsArray = Array.isArray(savings) ? savings : []; // Si savings no es un arreglo, asigna uno vacío
+  //* Cálculo del Balance
+  const balance = useMemo(() => { //Se utiliza useMemo para calcular el balance. Esto evita que se recalcule en cada renderizado, solo se recalcula cuando cambian los ingresos o gastos.
+    const totalIncome = income.reduce((acc, item) => acc + item.amount, 0); //Va acumulando/sumando los valores de income que encuentra.
+    const totalExpenses = expenses.reduce((acc, item) => acc + item.amount, 0); //Va acumulando/sumando los valores de expenses que encuentra.
+    return totalIncome - totalExpenses; //El balance total será la resta de los ingresos menos los gastos.
+  }, [income, expenses]); //Se recalcula cuando cambian los ingresos o gastos.
 
-  // Calculamos el balance solo cuando cambian los ingresos o los gastos
-  const balance = useMemo(() => {
-    const totalIncome = income.reduce((acc, item) => acc + item.amount, 0);
-    const totalExpenses = expenses.reduce((acc, item) => acc + item.amount, 0);
-    return totalIncome - totalExpenses;
-  }, [income, expenses]);
-
-  // Agrupar los gastos por día de la semana (ejemplo: lunes, martes, etc.)
+  //* Agrupar los gastos por día
   const groupedByDay = useMemo(() => {
     return expenses.reduce((acc, expense) => {
       const day = expense.day;
@@ -27,7 +24,7 @@ const useFinanceStats = () => {
     }, {});
   }, [expenses]);
 
-  // Agrupar los gastos por mes (ejemplo: enero, febrero, etc.)
+  //* Agrupar los gastos por mes
   const groupedByMonth = useMemo(() => {
     return expenses.reduce((acc, expense) => {
       const month = expense.month;
@@ -37,7 +34,7 @@ const useFinanceStats = () => {
     }, {});
   }, [expenses]);
 
-  // Agrupar los ingresos por día de la semana
+  //* Agrupar los ingresos por día de la semana
   const groupedIncomeByDay = useMemo(() => {
     return income.reduce((acc, incomeItem) => {
       const day = incomeItem.day;
@@ -47,7 +44,7 @@ const useFinanceStats = () => {
     }, {});
   }, [income]);
 
-  // Agrupar los ingresos por mes
+  //* Agrupar los ingresos por mes
   const groupedIncomeByMonth = useMemo(() => {
     return income.reduce((acc, incomeItem) => {
       const month = incomeItem.month;
@@ -57,12 +54,12 @@ const useFinanceStats = () => {
     }, {});
   }, [income]);
 
-  // Devolver las estadísticas calculadas
+  //* Devolver las estadísticas calculadas y de ahi la podemos usar en otros archivos.
   return { 
     balance, 
     income, 
     expenses, 
-    savings: savingsArray,
+    savings,
     groupedByDay,
     groupedByMonth,
     groupedIncomeByDay,
