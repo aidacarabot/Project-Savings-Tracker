@@ -25,7 +25,7 @@ const financeReducer = (state, action) => {
 
       const updatedExpenses = [...state.expenses, newExpense]; //Agregamos el nuevo gasto al array de state.expenses, esto genera un nuevo array con gastos anteriores y nuevos.
       const newStateWithExpense = { ...state, expenses: updatedExpenses }; //Creamos un nuevo objeto de estado con los gastos actualizados.
-      console.log("Guardando en localStorage:", newStateWithExpense); //!Para ver lo que guardamos en localStorage. Aparecerá cuando agregues un EXPENSE.
+      console.log("Guardando en localStorage ADD_EXPENSE:", newStateWithExpense); //!Para ver lo que guardamos en localStorage. Aparecerá cuando agregues un EXPENSE.
       localStorage.setItem('financeData', JSON.stringify(newStateWithExpense)); //?  guardamos los datos en localStorage con el nombre de 'financeData'
       return newStateWithExpense; //Retornamos el nuevo estado con los gastos actualizados.
 
@@ -47,14 +47,14 @@ const financeReducer = (state, action) => {
 
       const updatedIncome = [...state.income, newIncome]; //Actualizamos los ingresos. Agregamos el nuevo ingreso al array state.income.
       const newStateWithIncome = { ...state, income: updatedIncome }; //Generamos un nuevo objeto de estado con los ingreso actualizados.
-      console.log("Guardando en localStorage:", newStateWithIncome); //!Para ver lo que guardamos en localStorage. Aparecerá cuando agregues un INCOME.
+      console.log("Guardando en localStorage ADD_INCOME:", newStateWithIncome); //!Para ver lo que guardamos en localStorage. Aparecerá cuando agregues un INCOME.
       localStorage.setItem('financeData', JSON.stringify(newStateWithIncome)); //?Guardamos los datos en localStorage con el nombre de 'financeData'
       return newStateWithIncome; //Retornamos el nuevo estado con el ingreso agregado.
 
     //* Actualizar el valor del ahorro
     case "UPDATE_SAVINGS":
       const updatedSavings = { ...state, savings: action.payload }; //Creamos un nuevo objeto de estado con el valor de ahorro actualizado (action.payload)
-      console.log("Guardando en localStorage:", updatedSavings); //!Para ver lo que guardamos en localStorage. Aparecerá cuando actualices el SAVINGS.
+      console.log("Guardando en localStorage UPDATE_SAVINGS:", updatedSavings); //!Para ver lo que guardamos en localStorage. Aparecerá cuando actualices el SAVINGS.
       localStorage.setItem('financeData', JSON.stringify(updatedSavings)); //?Guardamos los datos en localStorage con el nombre de 'financeData'
       return updatedSavings; //Devolvemos el nuevo estado con los ahorros actualizados.
 

@@ -1,11 +1,14 @@
 //! Un hook personalizado para calcular y devolver las estadísticas de finanzas como balance, ingresos, gastos, y ahorros. Usa FinanceContext para acceder al estado financiero y realizar cálculos o transformaciones sobre ellos. Es el paso final que permite a los componentes usar fácilmente las estadísticas financieras.
 
 import { useContext, useMemo } from 'react'
-import FinanceContext from '../context/FinanceContext'
+import FinanceContext, { categories } from '../context/FinanceContext'
+
 
 const useFinanceStats = () => {
   const { state } = useContext(FinanceContext); // Obtenemos el estado del contexto. Proporciona datos financieros (income, expenses, savings).
-  const { income, expenses, savings } = state; // Extraemos estos del state para poder usarlos en los cálculos
+  const { income, expenses, savings, categories } = state; // Extraemos estos del state para poder usarlos en los cálculos
+
+  console.log("Categories:", categories);
 
   //* Cálculo del Balance
   const balance = useMemo(() => { //Se utiliza useMemo para calcular el balance. Esto evita que se recalcule en cada renderizado, solo se recalcula cuando cambian los ingresos o gastos.
@@ -13,6 +16,16 @@ const useFinanceStats = () => {
     const totalExpenses = expenses.reduce((acc, item) => acc + item.amount, 0); //Va acumulando/sumando los valores de expenses que encuentra.
     return totalIncome - totalExpenses; //El balance total será la resta de los ingresos menos los gastos.
   }, [income, expenses]); //Se recalcula cuando cambian los ingresos o gastos.
+
+  //* Agrupar los gastos por categoría
+  const groupedByCategory = useMemo(() => {
+    return expenses.reduce((acc, expense) => {
+      const category = expense.category;  // Obtenemos la categoría del gasto
+      if (!acc[category]) acc[category] = [];  // Si no existe la categoría, la inicializamos
+      acc[category].push(expense);  // Agregamos el gasto a la categoría correspondiente
+      return acc;
+    }, {});
+  }, [expenses]);
 
   //* Agrupar los gastos por día
   const groupedByDay = useMemo(() => {
@@ -60,6 +73,8 @@ const useFinanceStats = () => {
     income, 
     expenses, 
     savings,
+    categories,
+    groupedByCategory,
     groupedByDay,
     groupedByMonth,
     groupedIncomeByDay,

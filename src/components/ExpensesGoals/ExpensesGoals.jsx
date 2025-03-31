@@ -21,7 +21,7 @@ const ExpensesGoals = ({ view }) => {
   //* Cargar los objetivos guardados del localStorage dependiendo de la vista
   useEffect(() => {
     const storedCategoryGoals = JSON.parse(localStorage.getItem(`${view}CategoryGoals`));
-    console.log(storedCategoryGoals);
+    console.log("storedCategoryGoals:",storedCategoryGoals);
     if (storedCategoryGoals) {
       setCategoryGoals(storedCategoryGoals);
     }

@@ -1,9 +1,11 @@
 import { useContext, useState, useRef } from 'react'
-import FinanceContext from '../../../context/FinanceContext' //Para obtener el dispatch y agregar el gasto
+import FinanceContext, { categories } from '../../../context/FinanceContext' //Para obtener el dispatch y agregar el gasto
 import { format } from 'date-fns'
+import useFinanceStats from '../../../hooks/useFinanceStats';
 
 const ExpensesForm = ({onClose}) => {
   const { dispatch } = useContext(FinanceContext) //Obtener el dispatch del contexto
+  const { categories } = useFinanceStats();  // Accedemos a categorías y tipos desde el hook
 
   //*Referencias a los inputs del formulario
   const inputName = useRef()
@@ -13,9 +15,6 @@ const ExpensesForm = ({onClose}) => {
   const inputType = useRef()
 
   const [error, setError] = useState({}) //Para mostrar el mensaje de error si no se llenan todos los campos
-
-  const categories = ['Home 🏠', 'Transportation 🚗', 'Food & Groceries 🍽️', 'Health & Wellness 🏥', 'Leisure & Entertainment 🎭', 'Travel ✈️', 'Subscriptions 💳', 'Shopping 🛍️', 'Education 📚', 'Gifts 🎁', 'Debt 🏦', 'Other ❓'];
-  const types = ['Fixed', 'Variable'];
 
   const handleSubmit = (e) => {
     e.preventDefault(); //Evitar que se recargue la página
@@ -71,15 +70,6 @@ const ExpensesForm = ({onClose}) => {
           <select ref={inputCategory}>
             {categories.map(category => (
               <option key={category} value={category}>{category}</option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label>Type</label>
-          <select ref={inputType}>
-            {types.map(type => (
-              <option key={type} value={type}>{type}</option>
             ))}
           </select>
         </div>
