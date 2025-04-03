@@ -57,10 +57,26 @@ const financeReducer = (state, action) => {
       console.log("Guardando en localStorage UPDATE_SAVINGS:", updatedSavings); //!Para ver lo que guardamos en localStorage. Aparecerá cuando actualices el SAVINGS.
       localStorage.setItem('financeData', JSON.stringify(updatedSavings)); //?Guardamos los datos en localStorage con el nombre de 'financeData'
       return updatedSavings; //Devolvemos el nuevo estado con los ahorros actualizados.
+    
+    //* Eliminar Income
+    case "DELETE_INCOME":
+      const filteredIncome = state.income.filter(item => !(
+        item.name === action.payload.name &&
+        item.date === action.payload.date &&
+        item.amount === action.payload.amount
+      ));
+      const stateWithoutIncome = { ...state, income: filteredIncome };
+      localStorage.setItem('financeData', JSON.stringify(stateWithoutIncome));
 
-    //* Si el tipo de acción no coincide con ninguno de los casos anteriores, devolvemos el estados actual sin modificarlo.
-    default:
-      return state;
+    //* Eliminar Expense
+    const filteredExpenses = state.expenses.filter(item => !( 
+      item.name === action.payload.name && 
+      item.date === action.payload.date && 
+      item.amount === action.payload.amount 
+    ));
+    const stateWithoutExpense = { ...state, expenses: filteredExpenses };
+    localStorage.setItem('financeData', JSON.stringify(stateWithoutExpense)); // Actualiza el localStorage
+    return stateWithoutExpense; // Devuelve el nuevo estado sin la transacción eliminada
   }
 };
 

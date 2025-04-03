@@ -1,12 +1,13 @@
 //! Un hook personalizado para calcular y devolver las estadísticas de finanzas como balance, ingresos, gastos, y ahorros. Usa FinanceContext para acceder al estado financiero y realizar cálculos o transformaciones sobre ellos. Es el paso final que permite a los componentes usar fácilmente las estadísticas financieras.
 
 import { useContext, useMemo } from 'react'
-import FinanceContext, { categories } from '../context/FinanceContext'
-
+import FinanceContext from '../context/FinanceContext'
 
 const useFinanceStats = () => {
   const { state } = useContext(FinanceContext); // Obtenemos el estado del contexto. Proporciona datos financieros (income, expenses, savings).
   const { income, expenses, savings, categories } = state; // Extraemos estos del state para poder usarlos en los cálculos
+
+  const safeSavings = Array.isArray(savings) ? savings : [];   // Asegúrate de que savings sea un array, si no es un array, asigna un array vacío. Para que funcione en "Overview".
 
   console.log("Categories:", categories);
 
@@ -72,7 +73,7 @@ const useFinanceStats = () => {
     balance, 
     income, 
     expenses, 
-    savings,
+    savings:safeSavings,
     categories,
     groupedByCategory,
     groupedByDay,
