@@ -5,6 +5,7 @@ import ExpensesForm from '../components/Transactions/ExpensesForm/ExpensesForm'
 import IncomeForm from '../components/Transactions/IncomeForm/IncomeForm'
 import TransactionsHistory from '../components/TransactionsHistory/TransactionsHistory'
 import useFinanceStats from '../hooks/useFinanceStats'
+import { CalendarDays } from 'lucide-react'
 
 
 const Transactions = () => {
@@ -26,7 +27,7 @@ const Transactions = () => {
 
   return (
     <>
-      <h3>Today is {today}</h3>
+      <h3 className="today-date"><CalendarDays className="icon-date"/>Today is {today}</h3>
 
       <div className='buttons-transactions'>
         <button onClick={() => setView('Expenses')}>Expenses</button>

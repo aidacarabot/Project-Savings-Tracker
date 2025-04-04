@@ -1,0 +1,71 @@
+.buttons-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.buttons-view button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  font-family: "Urbanist", sans-serif;
+}
+
+.buttons-view button:hover {
+  background-color: lightgray;
+}
+
+.buttons-view button:active,
+.buttons-view button:focus {
+  background-color: lightgray;
+  border: 1px solid black;
+}
+
+.LineChart-title {
+  display: flex;
+  align-self: flex-start;
+  margin-left: 50px;
+}
+
+.LineChart-ExpSav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+/* CUSTOM TOOLTIP */
+
+.custom-tooltip {
+  background-color: #060A2E;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.custom-tooltip p {
+  color: #E9E9E9;
+  font-size: 14px;
+  font-weight: 100;
+}
+
+.tooltip-label {
+  margin-bottom: 10px;
+}
+
+.tooltip-exp {
+  padding-left: 5px;
+  margin-bottom: 5px;
+  border-left: 3px solid #EDA600;
+}
+
+.tooltip-sav {
+  padding-left: 5px;
+  border-left: 3px solid #74ACDC;
+}
+
+.tooltip-value {
+  font-weight: bold;
+  margin-left: 10px;
+}

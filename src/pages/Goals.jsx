@@ -2,6 +2,7 @@ import { useState } from 'react'
 import useToday from '../hooks/useToday'
 import useFinanceStats from '../hooks/useFinanceStats';
 import ExpensesGoals from '../components/ExpensesGoals/ExpensesGoals';
+import { CalendarDays } from 'lucide-react';
 
 const Goals = () => {
   const [view, setView] = useState('Month') // Estado para manejar qué vista mostrar
@@ -16,7 +17,7 @@ const Goals = () => {
   
   return (
     <>
-    <h3>Today is {today}</h3>
+    <h3 className="today-date"> <CalendarDays className="icon-date"/>Today is {today}</h3>
 
     <div className='buttons-goals'>
         <button onClick={() => setView('Week')}>Week Goal</button>

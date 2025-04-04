@@ -3,3 +3,27 @@
   flex-direction: row;
   height: 100svh;
 }
+
+.content {
+  width: 100vw;
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+/*! DATE */
+.today-date {
+  font-size: 38px;
+}
+
+.icon-date {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+}
+
+/* ! OVERVIEW PAGE */
+.overview-charts {
+  display: flex;
+}

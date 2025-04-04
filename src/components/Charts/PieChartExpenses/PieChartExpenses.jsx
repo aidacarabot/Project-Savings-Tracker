@@ -37,7 +37,7 @@ const PieChartExpenses = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   return (
-    <PieChart width={800} height={350}>
+    <PieChart width={400} height={350}>
       <Pie
         data={data01}
         dataKey='value'

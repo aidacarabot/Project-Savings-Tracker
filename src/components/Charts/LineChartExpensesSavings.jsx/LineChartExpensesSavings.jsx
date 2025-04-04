@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
-import useFinanceStats from '../../../hooks/useFinanceStats'
-
-
+import React, { useState } from 'react';
+import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
+import useFinanceStats from '../../../hooks/useFinanceStats';
+import './LineChartExpensesSavings.css';
+import CustomTooltip from './CustomTooltip';
 
 
 const LineChartExpensesSavings = () => {
@@ -36,7 +36,7 @@ const LineChartExpensesSavings = () => {
         });
       });
     } else if (view === 'Month') {
-      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const months = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
 
       months.forEach(month => {
         const monthExpenses = filteredExpenses.filter(expense => expense.month === month); // Obtener los gastos del mes actual
@@ -87,25 +87,33 @@ const LineChartExpensesSavings = () => {
   const chartData = getChartData();
 
   return (
-    <>
+    <div className="LineChart-ExpSav">
       <div className='buttons-view'>
         <button onClick={() => setView('Week')}>Week</button>
         <button onClick={() => setView('Month')}>Month</button>
         <button onClick={() => setView('Year')}>Year</button>
       </div>
-
+      <h2 className="LineChart-title">Finance Health</h2>
       <LineChart width={730} height={250} data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
         <XAxis
             dataKey="name"
             hide={false}
+            axisLine={false}
+            tickLine={false}
         />
-        <YAxis />
-        <Tooltip />
-        <Legend iconType='circle' iconSize='10' />
-        <Line type='monotone' dataKey='expenses' stroke='#FF3C38' strokeWidth={2} dot={{ fill: '#FF3C38' }} />
-        <Line type='monotone' dataKey='savings' stroke='#3185FC' strokeWidth={2} dot={{ fill: '#3185FC' }}/>
+        <YAxis axisLine={false} tickLine={false} />
+        <Tooltip content={<CustomTooltip />} 
+          cursor={{
+            stroke: '#E9E9E9',           // Cambiar el color de la línea
+            strokeWidth: 1,           // Cambiar el grosor de la línea
+            strokeDasharray: '4 4',   // Hacerla discontinua
+          }}
+        />
+        <Legend iconType='circle' iconSize='' />
+        <Line type="monotone" dataKey="expenses" stroke="#EDA600" strokeWidth={2} dot={false} />
+        <Line type="monotone" dataKey="savings" stroke="#74ACDC" strokeWidth={2} dot={false} />
       </LineChart>
-    </>
+    </div>
   )
 }
 

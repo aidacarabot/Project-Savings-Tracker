@@ -13,8 +13,8 @@ const useToday = () => {
       date.toLocaleDateString('en-US', {
         //toLocaleDateString convierte la fecha en un string legible según el formato indicado."en-US" es el formato de fecha en inglés (ej. 12/31/2022)
         weekday: 'long', //muestra el dia de la semana completa (ej. Sunday)
-        month: 'long', //muestra el mes completo (ej. January)
         day: 'numeric', //muestra el día del mes como un número (ej. 1, 2, 3, ..., 31)
+        month: 'long', //muestra el mes completo (ej. January)
         year: 'numeric' //muestra el año como un número (ej. 2023)
       })
     )
